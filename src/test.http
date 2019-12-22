@@ -1,0 +1,57 @@
+
+# For a quick start check out our HTTP Requests collection (Tools|HTTP Client|Open HTTP Requests Collection) or
+# paste cURL into the file and request will be converted to HTTP Request format.
+#
+# Following HTTP Request Live Templates are available:
+# * 'gtrp' and 'gtr' create a GET request with or without query parameters;
+# * 'ptr' and 'ptrp' create a POST request with a simple or parameter-like body;
+# * 'mptr' and 'fptr' create a POST request to submit a form with a text or file field (multipart/form-data);
+
+
+
+// 1. post list
+GET http://localhost:4000/api/posts
+Accept: application/json
+
+###
+
+// 2. new post
+POST http://localhost:4000/api/posts
+Content-Type: application/json
+
+{
+  "title": "test",
+  "body": "test",
+  "tags": ["태그", "배열", "입니다."]
+}
+
+###
+
+// 3. Read by id
+GET http://localhost:4000/api/posts/5dff1aad9a1165ebb07c6679
+Content-Type: application/json
+
+{}
+
+###
+
+// 4. Remove by id
+DELETE http://localhost:4000/api/posts/5dff1a136ea2f1eaac6df186
+Content-Type: application/json
+
+{}
+
+###
+
+
+
+PATCH http://localhost:4000/api/posts/5dff1aad9a1165ebb07c6679
+Content-Type: application/json
+
+{
+  "title": "change title@",
+  "body": "change body@@",
+  "tags": []
+}
+
+###
