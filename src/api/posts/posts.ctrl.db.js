@@ -31,10 +31,20 @@ application/json
  */
 exports.write = async (ctx) => {
 
-  // validation
+  // validation 스키마 생성 
   const schema = Joi.object().keys({
-    // title: Joi.string().
-  })
+    title: Joi.string().required(),  //required: 필수 
+    body: Joi.string().required(),   
+    tags: Joi.array().items(Joi.string()).required(),
+  });
+  // 첫번째 파라미터: 검증할 객체, 두번째 는 스키마 
+  const  result = Joi.validate(ctx.request.body, schema);
+
+  if(result.error) {
+    ctx.state = 400;
+    ctx.body = result.error; 
+    return;
+  }
 
 
   const { title, body, tags } = ctx.request.body;
@@ -115,7 +125,7 @@ exports.remove = async (ctx) => {
       ctx.status = 200;
       ctx.body = {
         message: '포스트를 찾을 수 없습니다.',
-      }
+      };
       return;
     }
     await Post.findByIdAndRemove(id);
