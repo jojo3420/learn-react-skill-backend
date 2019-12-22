@@ -10,7 +10,7 @@
 
 
 // 1. post list
-GET http://localhost:4000/api/posts
+GET http://localhost:4000/api/posts?page=2
 Accept: application/json
 
 ###
@@ -21,7 +21,7 @@ Content-Type: application/json
 
 {
   "title": "test",
-  "body": "test",
+  "body": "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttestv",
   "tags": ["태그", "배열", "입니다."]
 }
 

@@ -23,6 +23,7 @@ exports.checkObjectId = (ctx, next) => {
 };
 
 
+
 /*
 포스트 작성
 method: POST  URL: /api/posts
@@ -64,13 +65,42 @@ exports.write = async (ctx) => {
 
 };
 
+const limitBodyLength = (post, length) => ({  
+  // ...post.toJSON(), //lean() 이용하여 이미 변환하였음
+  ...post,
+  body: post.body.length < length ? post.body : `${post.body.slice(0, length)}...`,
+});
+
 exports.list = async (ctx) => {
+   const page = parseInt(ctx.query.page || 1, 10);
+   if (page > 1) {
+     ctx.status = 400;
+     ctx.body = {
+       message: 'page number is not available value!'
+     };
+   }
 
   try {
     // .exec() 메서드를 실행해야 실제로 쿼리가 실행됨
-    const posts = await Post.find().exec();
-    ctx.body = posts;
+    const viewCnt = 15;
+    const posts = await Post.find()
+      .sort({_id: -1})
+      .limit(viewCnt)
+      .skip((page -1) * viewCnt)
+      .lean() // json 형식으로 변환
+      .exec();
 
+    // console.log(Array.isArray(posts)); // true
+    const newPosts = posts.map(post => limitBodyLength(post, 200));
+
+    // setResponseHender - last page number
+    // db 쿼리 질의는 비동기적으로 하므로 awit 빼먹지 말것!
+    const pageCnt = await Post.countDocuments().exec();
+    // ctx.set은 response header를 설정
+    ctx.set("Last-page-number", Math.ceil(pageCnt / viewCnt));
+
+    // response result
+    ctx.body = newPosts;
   }catch (e) {
     ctx.throw(e, 500);
   }
