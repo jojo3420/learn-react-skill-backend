@@ -21,14 +21,14 @@ Content-Type: application/json
 
 {
   "title": "test",
-  "body": "testtesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttesttestv",
+  "body": "vvvv",
   "tags": ["태그", "배열", "입니다."]
 }
 
 ###
 
 // 3. Read by id
-GET http://localhost:4000/api/posts/5dff1aad9a1165ebb07c6679
+GET http://localhost:4000/api/posts/5e01b31267a8ae7bc27c233f
 Content-Type: application/json
 
 {}
@@ -36,7 +36,7 @@ Content-Type: application/json
 ###
 
 // 4. Remove by id
-DELETE http://localhost:4000/api/posts/5dff1a136ea2f1eaac6df186
+DELETE http://localhost:4000/api/posts/5e0463e12e92d4de41d8dbd3
 Content-Type: application/json
 
 {}

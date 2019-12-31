@@ -50,6 +50,7 @@ exports.write = async (ctx) => {
 
   const { title, body, tags } = ctx.request.body;
 
+
   const post = new Post({
     title,
     body,
@@ -73,17 +74,24 @@ const limitBodyLength = (post, length) => ({
 
 exports.list = async (ctx) => {
    const page = parseInt(ctx.query.page || 1, 10);
-   if (page > 1) {
+   const { tag } = ctx.query;
+   const query = tag ? {
+     tags: tag // tags 배열에 tag 를 가진 포스트 찾기 
+   } : {};
+
+   if (page < 1) {
      ctx.status = 400;
      ctx.body = {
        message: 'page number is not available value!'
      };
    }
 
+
   try {
     // .exec() 메서드를 실행해야 실제로 쿼리가 실행됨
-    const viewCnt = 15;
-    const posts = await Post.find()
+    const viewCnt = 10;
+    // tag 쿼리 조건식 추가
+    const posts = await Post.find(query)
       .sort({_id: -1})
       .limit(viewCnt)
       .skip((page -1) * viewCnt)
@@ -95,9 +103,10 @@ exports.list = async (ctx) => {
 
     // setResponseHender - last page number
     // db 쿼리 질의는 비동기적으로 하므로 awit 빼먹지 말것!
-    const pageCnt = await Post.countDocuments().exec();
+    // 갯수도 카운팅 할 때에도 쿼리 조건 넣어줌
+    const pageCnt = await Post.countDocuments(query).exec();
     // ctx.set은 response header를 설정
-    ctx.set("Last-page-number", Math.ceil(pageCnt / viewCnt));
+    ctx.set("Last-page", Math.ceil(pageCnt / viewCnt));
 
     // response result
     ctx.body = newPosts;

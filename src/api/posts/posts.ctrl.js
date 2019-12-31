@@ -1,7 +1,7 @@
 let postId = 1; //id의 초기값
 
 const posts = [{
-    id:1,
+    id: 1,
     title: '제목',
     body: '내용',
   },
