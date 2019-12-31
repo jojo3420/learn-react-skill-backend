@@ -55,3 +55,25 @@ Content-Type: application/json
 }
 
 ###
+
+// 6. login 
+POST http://localhost:4000/api/auth/login
+Content-Type: application/json
+
+{
+  "password": "react123"
+}
+### 
+
+// 7, login check 
+GET http://localhost:4000/api/auth/check
+Content-Type: application/json
+
+{}
+
+### 8. logout 
+
+POST http://localhost:4000/api/auth/logout
+Content-Type: application/json
+
+{}
